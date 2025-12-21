@@ -1,27 +1,37 @@
 package org.hoyo.gen;
 
-import java.util.concurrent.TimeUnit;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
-public class ExecutableClass extends BaseClass {
-	public static void main(String[] args) throws InterruptedException {
+public class ExecutableClass extends BaseClass{
+	// JUnit
+	static LandingPage lp;
+	static NavBar nb;
+	static RedeemCodePage rcp;
+	int passCount = 0;
+	int failCount = 0;
+	
+	@BeforeClass
+	public static void initiateBrowser() {
 		chromeBrowser();
 		browserUrl("https://genshin.hoyoverse.com/en/");
 		iWait(5);
 		// landing page
-		LandingPage lp = new LandingPage();
+		lp = new LandingPage();
 		// nav-bar
-		NavBar nb = new NavBar();
+		nb = new NavBar();
 		// Redeem page
-		RedeemCodePage rcp = new RedeemCodePage();
-
-		int passCount = 0;
-		int failCount = 0;
-		// TO1
+		rcp = new RedeemCodePage();
+	}
+	
+	
+	@Test
+	public void TO1TC1() {
+//		 TO1
 		System.out.println("\n"+"Test Scenario 1: ");
-		// TC1
+//		 TC1
 		try {
 			if ((lp.getDownloadBtn() != null) && (lp.getScrollBtn() != null)) {
 				a.click(lp.getDownloadBtn()).perform();
@@ -40,6 +50,11 @@ public class ExecutableClass extends BaseClass {
 			failCount++;
 			System.out.println("Failed to click, due to cookie pop-up is preventing from physical click.");
 		}
+	}
+	
+	@Test
+	public void TO1TC2() {
+		// TO1
 		// TC2
 		acceptCookie();
 		try {
@@ -58,49 +73,10 @@ public class ExecutableClass extends BaseClass {
 		} catch (Exception e) {
 			System.out.println("Test Case 1.2: Failed"+ "\n" + "Can't able to locate element");
 		}
-
-		
-		// TO2
-		// TC1
-		Thread.sleep(5000);
-		System.out.println("\n"+"Test Scenario 2: ");
-		try {
-			a.click(lp.getScrollBtn()).perform();
-			System.out.println("Test Case 2.1: Passed ");
-			passCount++;
-			Thread.sleep(5000);
-			// TC2
-			try {
-				a.click(lp.getScrollBtn()).perform();
-				System.out.println("Test Case 2.2: Failed ");	
-				failCount++;
-				System.out.println("Scroll down button visible on pages other than landing page");
-			} catch (Exception e) {
-				System.out.println("Test Case 2.2: Passed ");
-				passCount++;
-			}
-		} catch (Exception e) {
-			failCount++;
-			System.out.println("Test Case 2.1: Failed"+ "\n"+ "Test Case 2.2: Failed");
-		}
-		
-		
-		// TO3
-		// TC1
-		// Handling Test Scenario 03 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		System.out.println("\nTotal Test Execution summary\nTotal Test Cases Executed: "+(passCount+failCount));
-		System.out.println("Passed: "+passCount);
-		System.out.println("Failed: "+failCount);
-		
-		driver.quit();
+	}
+	
+	@AfterClass
+	public static void terminateBrowser() {
+		killDriver();
 	}
 }
