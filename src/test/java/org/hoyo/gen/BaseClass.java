@@ -41,5 +41,8 @@ public class BaseClass {
 	public static void scrollDown() {
 		a.click(driver.findElement(By.xpath("//div[@id='pz_w4YUDp9Hahpz-l7sEnSHUj3']"))).perform(); // scroll down button element 
 	}
+	public static void killDriver() {
+		driver.quit();
+	}
 		
 }
